@@ -5,21 +5,20 @@ import com.example.demo.model.Member;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-import java.util.Optional;
 
 @Mapper
 public interface MemberMapper {
 
     void save(Member member);
 
-    Optional<Member> findById(Long id);
+    void update(Member member);
+
+    void delete(long id);
+
+    Member findById(long id);
 
     List<Member> findAll();
 
-    void update(Member member);
 
-    void delete(Long id);
-
-    List<Member> getMember();
 
 }

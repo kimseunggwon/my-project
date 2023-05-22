@@ -8,9 +8,11 @@ import java.util.Optional;
 public interface MemberService {
 
     void saveMember(Member member);
-    Optional<Member> findMemberById(Long id);
-    List<Member> findAllMembers();
-    void updateMember(Member member);
-    void deleteMember(Long id);
-    List<Member> getMember();
+
+    void update(Member member,long id);
+
+    void delete(long id);
+
+    Member findById(long id);
+    List<Member> findAll();
 }

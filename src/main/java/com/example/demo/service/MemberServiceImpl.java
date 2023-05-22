@@ -1,9 +1,13 @@
 package com.example.demo.service;
 
 
+import com.example.demo.mapper.MemberMapper;
+
+
 import com.example.demo.mapper.MemberRepository;
 import com.example.demo.model.Member;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,24 +25,22 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public Optional<Member> findMemberById(Long id) {
-        return memberRepository.findById(id);
-    }
-    @Override
-    public List<Member> findAllMembers() {
+    public List<Member> findAll() {
         return memberRepository.findAll();
     }
+
     @Override
-    public void updateMember(Member member) {
+    public void update(Member member,long id) {
         memberRepository.update(member);
     }
+
     @Override
-    public void deleteMember(Long id) {
+    public void delete(long id) {
         memberRepository.delete(id);
     }
-    @Override
-    public List<Member> getMember() {
-        return memberRepository.getMember();
-    }
 
+    @Override
+    public Member findById(long id) {
+        return memberRepository.findById(id);
+    }
 }
