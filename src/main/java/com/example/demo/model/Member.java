@@ -14,5 +14,7 @@ public class Member {
     private LocalDateTime createdAt;
     private Integer quantity;
 
+    // new
+    private String loginId;
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class MemberController {
+public class MemberApiController {
 
     private final MemberService memberService;
 
@@ -31,17 +31,17 @@ public class MemberController {
         return member;
     }
 
-    /** 조회
+    /** all 조회
      */
     @GetMapping("/getMemberAll")
     public List<Member> getMember(Member member) {
-        log.info("모델 컨트롤러 진입");
+        log.info("getMember 컨트롤러 진입");
         return memberService.findAll();
     }
 
     @GetMapping("/getMember/{id}")
     public Member getMemberById(@PathVariable long id) {
-        log.info("모델 컨트롤러 진입");
+        log.info("getMemberById 컨트롤러 진입");
         return memberService.findById(id);
     }
 
