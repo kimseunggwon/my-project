@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>회원 목록</h2>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>로그인 ID</th>
+            <th>이름</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${member}">
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.loginId}"></td>
+            <td th:text="${member.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <hr class="my-4">
+
+    <div class="text-center">
+        <a href="/member/add" class="btn btn-primary">회원 등록</a>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,14 +1,26 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>그냥 홈</title>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>안녕하세요!</h1>
-<h1>테스트!</h1>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>홈 화면</h2> </div>
+
+    <div class="row">
+        <div class="col">
+            <a href="/member/add" class="w-100 btn btn-secondary btn-lg">회원 가입</a>
+        </div>
+        <div class="col">
+            <a href="/member/login" class="w-100 btn btn-dark btn-lg">로그인</a>
+        </div>
+        </div>
+    </div>
+
+    <hr class="my-4">
+</div> <!-- /container -->
 </body>
 </html>
-
-

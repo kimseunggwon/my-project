@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Login</title>
+    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 400px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .custom-button {
+            background-color: #41464b;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>로그인 홈</h2>
+    </div>
+
+    <form th:action="@{/member/login}" th:object="${member}" method="post">
+        <div>
+            <label for="loginId">로그인 ID</label>
+            <input type="text" id="loginId" th:field="*{loginId}" class="form-control">
+            <div class="field-error" th:errors="*{loginId}"></div>
+        </div>
+
+        <div>
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control">
+            <div class="field-error" th:errors="*{password}"></div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary custom-button">로그인</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
