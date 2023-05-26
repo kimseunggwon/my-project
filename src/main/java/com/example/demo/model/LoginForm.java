@@ -6,10 +6,9 @@ import lombok.Data;
 @Data
 public class LoginForm {
 
-
-    @NotNull
+    @NotNull(message = "아이디 입력하세요")
     private String loginId;
 
-    @NotNull
+    @NotNull(message = "비밀번호 입력하세요")
     private String password;
 }

@@ -11,8 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -46,7 +50,7 @@ public class MemberViewController {
         model.addAttribute("registrationCompleted" ,true);
         memoryMemberRepository.save(member);
         log.info("Member save : {} ", member);
-        return "member/addMemberForm";
+        return "home";
     }
 
     /** 목록 보기
@@ -60,23 +64,24 @@ public class MemberViewController {
 
     /** 상세 목록 보기
      */
-    @GetMapping("/{memberId}")
+  /*  @GetMapping("/{memberId}")
     public String Member(@PathVariable long memberId,Model model){
         Member member = memoryMemberRepository.findById(memberId);
         model.addAttribute("member",member);
         return "member/memberListDetail";
-    }
+    }*/
 
     /** 로그인
      */
     @GetMapping("/login")
-    public String login1(@ModelAttribute("member") Member member) {
-
+    public String login1(Model model) {
+        Member member1 = new Member();
+        model.addAttribute("member",member1);
         return "member/memberLogin";
     }
 
     @PostMapping("/login")
-    public String login2(@Valid @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult) {
+    public String login2(@Valid @ModelAttribute("member") LoginForm loginForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()){
             return "member/memberLogin";
@@ -88,9 +93,33 @@ public class MemberViewController {
         log.info("loginMember: {}", loginMember);
 
         if (loginMember == null) {
-            bindingResult.reject("fail", "아이디, 비밀번호가 맞지 않습니다.");
+            bindingResult.reject("loginFail", "아이디, 비밀번호가 맞지 않습니다.");
+            return "member/memberLogin";
+        } else if (loginForm.getLoginId() == null && loginForm.getPassword() == null) {
+            bindingResult.reject("loginNull", "아이디와 비밀번호를 입력하세요.");
             return "member/memberLogin";
         }
+
+        //맴버 여부 확인
+        /*boolean memberExists = memoryMemberRepository.findById(loginMember.getId()) != null;
+        if (!memberExists) {
+            bindingResult.reject("fail","회원 정보가 없습니다.");
+            return "member/memberLogin";
+        }*/
+
+
+        Optional<Member> optionalMember = Optional.ofNullable(memoryMemberRepository.findById(loginMember.getId()));
+        if (optionalMember.isEmpty()) {
+            bindingResult.reject("loginId", "회원 정보를 입력하세요");
+            bindingResult.reject("password", "회원 정보를 입력하세요");
+            return "member/memberLogin";
+        }
+
+
+        //로그인 성공
+        Member authMember = optionalMember.get();
+        redirectAttributes.addFlashAttribute("loginMember",authMember);
+        redirectAttributes.addFlashAttribute("success","로그인 성공");
 
         return "redirect:/member/memberList";
     }
