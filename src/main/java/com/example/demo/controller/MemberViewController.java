@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +45,15 @@ public class MemberViewController {
 
     @PostMapping("/add")
     public String saveMember(@ModelAttribute("member") Member member, Model model ,BindingResult bindingResult){
+
+        if (memoryMemberRepository.findByLoginId(member.getLoginId()).isPresent()) {
+            bindingResult.reject("duplicate", "이미 가입된 아이디 입니다.");
+            log.error("duplicate:{}",bindingResult.getAllErrors());
+        }
+
         if (bindingResult.hasErrors()){
             log.error("Validation errors occurred: {}",bindingResult.getAllErrors());
+            return "member/addMemberForm";
         }
 
         model.addAttribute("registrationCompleted" ,true);
@@ -81,7 +90,8 @@ public class MemberViewController {
     }
 
     @PostMapping("/login")
-    public String login2(@Valid @ModelAttribute("member") LoginForm loginForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String login2(@Valid @ModelAttribute("member") LoginForm loginForm, BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()){
             return "member/memberLogin";
@@ -92,11 +102,9 @@ public class MemberViewController {
         log.info("form.getPassword: {}", loginForm.getPassword());
         log.info("loginMember: {}", loginMember);
 
+
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디, 비밀번호가 맞지 않습니다.");
-            return "member/memberLogin";
-        } else if (loginForm.getLoginId() == null && loginForm.getPassword() == null) {
-            bindingResult.reject("loginNull", "아이디와 비밀번호를 입력하세요.");
             return "member/memberLogin";
         }
 
@@ -123,13 +131,5 @@ public class MemberViewController {
 
         return "redirect:/member/memberList";
     }
-
-
-    // 페이지네이션
-
-    // 회원가입
-
-    // 로그인 
-
 
 }

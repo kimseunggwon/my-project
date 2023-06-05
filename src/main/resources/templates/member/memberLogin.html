@@ -26,8 +26,12 @@
     <form th:action="@{/member/login}" th:object="${member}" method="post">
 
         <!-- Display general errors -->
-        <div class="field-error" th:if="${#fields.hasGlobalErrors()}">
+       <!-- <div class="field-error" th:if="${#fields.hasGlobalErrors()}">
             <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
+        </div>-->
+
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
         </div>
 
         <div>

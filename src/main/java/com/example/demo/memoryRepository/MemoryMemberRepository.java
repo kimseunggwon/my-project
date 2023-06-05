@@ -3,6 +3,7 @@ package com.example.demo.memoryRepository;
 
 import com.example.demo.mapper.MemberMapper;
 import com.example.demo.model.Member;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @Slf4j
+@Builder
 public class MemoryMemberRepository {
 
     private static final Map<Long,Member> map = new HashMap<>();

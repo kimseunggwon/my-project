@@ -2,6 +2,7 @@ package com.example.demo.mapper;
 
 
 import com.example.demo.model.Member;
+import lombok.Builder;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
